@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personajes de Rick and Morty</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Personajes de Rick and Morty</h1>
+        <p>Proyecto realizado con HTML, CSS y JavaScript consumiendo una API</p>
+    </header>
+
+    <main>
+
+        <aside>
+            <h2>Información</h2>
+
+            <p>
+                Esta página muestra información de personajes obtenidos desde la API de Rick and Morty.
+            </p>
+
+            <a href="https://rickandmortyapi.com/" target="_blank">
+                Ir al sitio oficial de la API
+            </a>
+        </aside>
+
+        <section>
+            <h2>Listado de Personajes</h2>
+
+            <div class="controles">
+                <input
+                    type="text"
+                    id="buscar"
+                    placeholder="Buscar personaje..."
+                />
+
+                <button id="btnBuscar">Buscar</button>
+                <button id="btnCargar">Mostrar Todos</button>
+            </div>
+
+            <div id="contenedor"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Proyecto API Rick and Morty</p>
+        <p>Desarrollado con HTML, CSS y JavaScript</p>
+    </footer>
+
+    <script type="text/JavaScript" src="script.js"></script>
+</body>
+</html>
