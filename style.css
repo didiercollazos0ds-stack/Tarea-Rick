@@ -6,12 +6,12 @@
 }
 
 body{
-    background-color:#f4f4f4;
+    background-color:#060000;
 }
 
 header{
     background:#202329;
-    color:white;
+    color:rgb(247, 245, 245);
     text-align:center;
     padding:20px;
 }
@@ -60,7 +60,7 @@ button{
     padding:10px 15px;
     margin-left:5px;
     border:none;
-    background:#00b5cc;
+    background:#39d487;
     color:white;
     border-radius:5px;
     cursor:pointer;
