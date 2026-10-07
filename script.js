@@ -1,47 +1,178 @@
 const contenedor = document.getElementById("contenedor");
-const btnCargar = document.getElementById("btnCargar");
-const btnBuscar = document.getElementById("btnBuscar");
 const buscar = document.getElementById("buscar");
+const genero = document.getElementById("genero");
+const ordenar = document.getElementById("ordenar");
 
-function mostrarPersonajes(url) {
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
+const btnBuscar = document.getElementById("btnBuscar");
+const btnCargar = document.getElementById("btnCargar");
 
-            contenedor.innerHTML = "";
+const btnAnterior = document.getElementById("btnAnterior");
+const btnSiguiente = document.getElementById("btnSiguiente");
 
-            data.results.forEach(personaje => {
+const contador = document.getElementById("contador");
+const paginaActual = document.getElementById("paginaActual");
 
-                contenedor.innerHTML += `
-    <div class="card">
-        <img src="${personaje.image}" alt="${personaje.image}"> 
-        <p><strong>Nombre:</strong> ${personaje.name}</p>
-        <p><strong>Estado:</strong> ${personaje.status}</p>
-        <p><strong>Especie:</strong> ${personaje.species}</p>
-        <p><strong>Género:</strong> ${personaje.gender}</p>
-    </div>
-`;
-            });
+let pagina = 1;
+let nombreActual = "";
+let generoActual = "";
 
-        })
-        .catch(error => {
-            console.error(error);
-            contenedor.innerHTML = "<h3>Error al cargar personajes.</h3>";
+async function mostrarPersonajes() {
+
+    let url = `https://rickandmortyapi.com/api/character/?page=${pagina}`;
+
+    if (nombreActual) {
+        url += `&name=${encodeURIComponent(nombreActual)}`;
+    }
+
+    if (generoActual) {
+        url += `&gender=${encodeURIComponent(generoActual)}`;
+    }
+
+    try {
+
+        const respuesta = await fetch(url);
+        const data = await respuesta.json();
+
+        if (!data.results) {
+
+            contenedor.innerHTML =
+            "<h3>No se encontraron personajes.</h3>";
+
+            contador.textContent = "";
+            return;
+        }
+
+        let personajes = [...data.results];
+
+        if (ordenar.value === "asc") {
+            personajes.sort((a, b) =>
+                a.name.localeCompare(b.name)
+            );
+        }
+
+        if (ordenar.value === "desc") {
+            personajes.sort((a, b) =>
+                b.name.localeCompare(a.name)
+            );
+        }
+
+        contenedor.innerHTML = "";
+
+        contador.textContent =
+        `Personajes encontrados: ${data.info.count}`;
+
+        paginaActual.textContent =
+        `Página ${pagina} de ${data.info.pages}`;
+
+        personajes.forEach(personaje => {
+
+            let colorEstado = "#f1c40f";
+
+            if (personaje.status === "Alive") {
+                colorEstado = "#22c55e";
+            } else if (personaje.status === "Dead") {
+                colorEstado = "#ef4444";
+            }
+
+            let estadoHTML = "";
+
+            if (personaje.status === "Alive") {
+                estadoHTML =
+                '<span class="estado vivo">Alive</span>';
+            }
+            else if (personaje.status === "Dead") {
+                estadoHTML =
+                '<span class="estado muerto">Dead</span>';
+            }
+            else {
+                estadoHTML =
+                '<span class="estado desconocido">Unknown</span>';
+            }
+
+            contenedor.innerHTML += `
+                <div class="card"
+                style="border-top:8px solid ${colorEstado}">
+
+                    <img src="${personaje.image}" alt="${personaje.name}">
+
+                    <h3>${personaje.name}</h3>
+
+                    <p><strong>Estado:</strong> ${estadoHTML}</p>
+
+                    <p>
+                        <strong>Especie:</strong>
+                        ${personaje.species}
+                    </p>
+
+                    <p>
+                        <strong>Género:</strong>
+                        ${personaje.gender}
+                    </p>
+
+                    <p>
+                        <strong>Origen:</strong>
+                        ${personaje.origin.name}
+                    </p>
+
+                </div>
+            `;
         });
+
+        btnAnterior.disabled = !data.info.prev;
+        btnSiguiente.disabled = !data.info.next;
+
+    }
+    catch (error) {
+
+        contenedor.innerHTML =
+        "<h3>Error al cargar personajes.</h3>";
+
+        contador.textContent = "";
+
+        console.error(error);
+    }
 }
 
-btnCargar.addEventListener("click", () => {
-    mostrarPersonajes("https://rickandmortyapi.com/api/character");
+btnBuscar.addEventListener("click", () => {
+
+    pagina = 1;
+
+    nombreActual = buscar.value.trim();
+    generoActual = genero.value;
+
+    mostrarPersonajes();
 });
 
-btnBuscar.addEventListener("click", () => {
-    const nombre = buscar.value.trim();
+btnCargar.addEventListener("click", () => {
 
-    if (nombre !== "") {
-        mostrarPersonajes(
-            `https://rickandmortyapi.com/api/character/?name=${nombre}`
-        );
+    pagina = 1;
+
+    nombreActual = "";
+    generoActual = "";
+
+    buscar.value = "";
+    genero.value = "";
+    ordenar.value = "";
+
+    mostrarPersonajes();
+});
+
+ordenar.addEventListener("change", () => {
+    mostrarPersonajes();
+});
+
+btnSiguiente.addEventListener("click", () => {
+
+    pagina++;
+    mostrarPersonajes();
+});
+
+btnAnterior.addEventListener("click", () => {
+
+    if (pagina > 1) {
+        pagina--;
+        mostrarPersonajes();
     }
 });
 
-mostrarPersonajes("https://rickandmortyapi.com/api/character");
+mostrarPersonajes();

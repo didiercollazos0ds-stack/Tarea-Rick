@@ -3,55 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personajes de Rick and Morty</title>
-
+    <title>Personajes Rick and Morty</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Personajes Rick and Morty</h1>
-        <p>Proyecto Rick and Morty</p>
-    </header>
+<header>
 
-    <main>
 
-        <aside>
-            <h2>Información</h2>
 
-            <p>
-                Esta página muestra información de personajes obtenidos desde la API de Rick and Morty.
-            </p>
+    <img
+        src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Rick_and_Morty.svg"
+        alt="Rick and Morty"
+        classt consumiendo una API
+    </p>
 
-            <a href="https://rickandmortyapi.com/" target="_blank">
-                Ir al sitio oficial de la API
-            </a>
-        </aside>
+</header>
 
-        <section>
-            <h2>Listado de Personajes</h2>
+<main>
 
-            <div class="controles">
-                <input
-                    type="text"
-                    id="buscar"
-                    placeholder="Buscar personaje..."
-                />
+    <aside>
 
-                <button id="btnBuscar">Buscar</button>
-                <button id="btnCargar">Mostrar Todos</button>
-            </div>
+        <h2>Información</h2>
 
-            <div id="contenedor"></div>
-        </section>
+        <p>
+            Esta página muestra información de personajes obtenidos desde la API de Rick and Morty.
+        </p>
 
-    </main>
+        <a href="https://rickandmortyapi.com/" target="_blank">
+            Ir al sitio oficial de la API
+        </a>
 
-    <footer>
-        <p>Proyecto API Rick and Morty</p>
-        <p>Rick and Morty</p>
-    </footer>
+    </aside>
 
-    <script type="text/JavaScript" src="script.js"></script>
+    <section>
+
+        <h2>Listado de Personajes</h2>
+
+        <div class="controles">
+
+            <input
+                type="text"
+                id="buscar"
+                placeholder="Buscar personaje..."
+            >
+
+            <select id="genero">
+                <option value="">Todos los géneros</option>
+                <option value="Male">Masculino</option>
+                <option value="Female">Femenino</option>
+                <option value="Genderless">Sin género</option>
+                <option value="unknown">Desconocido</option>
+            </select>
+
+            <select id="ordenar">
+                <option value="">Ordenar</option>
+                <option value="asc">Nombre A-Z</option>
+                <option value="desc">Nombre Z-A</option>
+            </select>
+
+            <button id="btnBuscar">Buscar</button>
+            <button id="btnCargar">Mostrar Todos</button>
+
+        </div>
+
+        <p id="contador"></p>
+
+        <div id="contenedor"></div>
+
+        <div class="paginacion">
+
+            <button id="btnAnterior">
+                ⬅ Anterior
+            </button>
+
+            <span id="paginaActual">
+                Página 1
+            </span>
+
+            <button id="btnSiguiente">
+                Siguiente ➡
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+
+    <p>Proyecto API Rick and Morty</p>
+
+    <p>
+        Desarrollado con HTML, CSS y JavaScript
+    </p>
+
+</footer>
+
+<script src="script.js"></script>
+
 </body>
 </html>
