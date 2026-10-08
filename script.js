@@ -30,8 +30,9 @@ async function mostrarPersonajes() {
 
     try {
 
-        const respuesta = await fetch(url);
+        const respuesta = await fetch(url); // Puedes leer mas sobre el metodo fetch , porque puedes acceder a los headers, usar "then y catch" y mas....
         const data = await respuesta.json();
+        //Puedes usar console.log("data",data) para que veas que es data en la consola del navegador.
 
         if (!data.results) {
 
@@ -42,7 +43,7 @@ async function mostrarPersonajes() {
             return;
         }
 
-        let personajes = [...data.results];
+        let personajes = [...data.results];  // spread operation leer https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Spread_syntax  (son los [...data]) 
 
         if (ordenar.value === "asc") {
             personajes.sort((a, b) =>
@@ -125,11 +126,11 @@ async function mostrarPersonajes() {
     catch (error) {
 
         contenedor.innerHTML =
-        "<h3>Error al cargar personajes.</h3>";
+        "<h3>Error al cargar personajes.</h3>";     
 
         contador.textContent = "";
 
-        console.error(error);
+        console.error(error);   // esto queda accesible en el navegador.
     }
 }
 
